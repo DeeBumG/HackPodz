@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ftp-vuln
+spec:
+  containers:
+  - name: ftp
+    image: nickdinonno/ftp-vuln
+    command: ["sleep", "3600"]

